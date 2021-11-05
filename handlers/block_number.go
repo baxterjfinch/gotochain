@@ -10,22 +10,21 @@ import (
 )
 
 func BlockNumber(c echo.Context) error {
-  var message string
+  var messageErr string
 
   client, err := service.EthConnect(c)
   if err != nil {
-    message = fmt.Sprintf("Error Connecting To Client: %d", err)
+    messageErr = fmt.Sprintf("Error Connecting To Client: %d", err)
   }
 
   blockNumber, err := client.BlockNumber(context.Background())
   if err != nil {
-    message = fmt.Sprintf("Error Getting Block Number: %d", err)
-  } else {
-    message = fmt.Sprintf("%d", blockNumber)
+    messageErr = fmt.Sprintf("Error Getting Block Number: %d", err)
   }
 
-  response := renderings.BlockNumberResponse{
-    BlockNumber: message,
+  response := renderings.Response{
+    BlockNumber: blockNumber,
+    Error: messageErr,
   }
 
   return c.JSON(http.StatusOK, response)

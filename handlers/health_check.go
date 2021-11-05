@@ -7,8 +7,8 @@ import (
 )
 
 func HealthCheck(c echo.Context) error {
-  resp := renderings.HealthCheckResponse{
-    Message: "Everything is good!",
+  resp := renderings.Response{
+    HealthCheck: "Everything is good!",
   }
   return c.JSON(http.StatusOK, resp)
 }
